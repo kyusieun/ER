@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'second_page.dart';
 import 'package:provider/provider.dart';
 import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class GlobalData extends ChangeNotifier {
   String userName = '';
@@ -13,6 +14,8 @@ class GlobalData extends ChangeNotifier {
   String patientAge = '';
   String patientSex = '';
   String etc = '';
+  String place = '';
+  String majorInjuryName = '';
   void updateString(String kind, String value) {
     switch (kind) {
       case '분류자':
@@ -47,17 +50,17 @@ class GlobalData extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool is119 = true;
-  bool canWalk = false;
+  bool ambulance = true;
+  bool walkingCheck = false;
   bool canBreath = false;
   bool pulse = false;
   void updateBoolean(String kind, bool value) {
     switch (kind) {
       case '119':
-        is119 = value;
+        ambulance = value;
         break;
       case '보행 여부':
-        canWalk = value;
+        walkingCheck = value;
         break;
       case '호흡':
         canBreath = value;
@@ -96,14 +99,45 @@ class GlobalData extends ChangeNotifier {
       'patientAge': patientAge,
       'patientSex': patientSex,
       'etc': etc,
+      'place': place,
+      'majorInjuryName': majorInjuryName,
+      'ambulance': ambulance,
+      'walkingCheck': walkingCheck,
+      'canBreath': canBreath,
+      'pulse': pulse,
+      'consciousness': consciousness,
+      'emergency': emergency,
     };
   }
 
-  void sendDataToServer() {
+  Future<void> sendJSONData() async {
     Map<String, dynamic> data = toJson();
     String jsonData = jsonEncode(data);
 
-    // 여기서 jsonData를 서버에 전송하는 로직을 추가하세요
+    String ipAddress = '10.21.20.124';
+    int port = 8080;
+    String url = 'http://$ipAddress:$port/api';
+
+    Map<String, String> headers = {'Content-Type': 'application/json'};
+
+    try {
+      http.Response response = await http.post(
+        Uri.parse(url),
+        headers: headers,
+        body: jsonData,
+      );
+
+      if (response.statusCode == 200) {
+        // 요청이 성공한 경우
+        print('요청이 성공했습니다.');
+        print(response.body);
+      } else {
+        // 요청이 실패한 경우
+        print('요청이 실패했습니다. 응답 코드: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('요청 중 오류가 발생했습니다: $error');
+    }
   }
 }
 
@@ -140,7 +174,8 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.red);
 
     return MaterialApp(
-      title: 'Flutter layout demo',
+      debugShowCheckedModeBanner: false,
+      title: 'ERCALL',
       theme: themeData,
       home: FirstPage(),
     );

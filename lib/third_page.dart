@@ -216,6 +216,7 @@ class ThirdPage extends StatelessWidget {
         padding: const EdgeInsets.all(30.0),
         child: ElevatedButton(
           onPressed: () {
+            context.read<GlobalData>().sendJSONData();
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => AutoMatching()),
