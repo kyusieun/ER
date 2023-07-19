@@ -12,10 +12,16 @@ class LocationSelect extends StatefulWidget {
 class _LocationSelectState extends State<LocationSelect> {
   late GoogleMapController mapController;
 
-  final LatLng _center = const LatLng(45.521563, -122.677433);
+  final LatLng _center = const LatLng(37.541, 126.986);
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
+  }
+
+  Future<Position> _getPosition() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.best);
+    return position;
   }
 
   @override
@@ -32,6 +38,15 @@ class _LocationSelectState extends State<LocationSelect> {
           target: _center,
           zoom: 11.0,
         ),
+      ),
+      bottomNavigationBar: ElevatedButton(
+        child: Text('test'),
+        onPressed: () {
+          _getPosition().then((position) {
+            print(
+                "Template position check ${position.latitude}, ${position.longitude}");
+          });
+        },
       ),
     );
   }

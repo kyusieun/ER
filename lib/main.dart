@@ -14,7 +14,7 @@ class GlobalData extends ChangeNotifier {
   String patientAge = '';
   String patientSex = '';
   String etc = '';
-  String place = '';
+  String place = '기본 주소';
   String majorInjuryName = '';
   void updateString(String kind, String value) {
     switch (kind) {
@@ -44,6 +44,9 @@ class GlobalData extends ChangeNotifier {
         break;
       case '인적사항':
         etc = value;
+        break;
+      case '위치':
+        place = value;
         break;
     }
     print("$kind: $value");

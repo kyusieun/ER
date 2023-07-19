@@ -1,8 +1,10 @@
-import 'package:ercall/location_select.dart';
 import 'package:flutter/material.dart';
 import 'third_page.dart';
 import 'package:provider/provider.dart';
 import 'main.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart';
+import 'location_select.dart';
 
 class SecondPage extends StatelessWidget {
   const SecondPage({
@@ -36,6 +38,12 @@ class SecondBody extends StatelessWidget {
   const SecondBody({
     super.key,
   });
+
+  Future<Position> _getPosition() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.best);
+    return position;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -152,8 +160,15 @@ class SecondBody extends StatelessWidget {
                       context,
                       MaterialPageRoute(builder: (context) => LocationSelect()),
                     );
+                    // _getPosition().then((position) {
+
+                    //   context.read<GlobalData>().updateString(
+                    //       '위치', '${position.latitude}, ${position.longitude}');
+                    //   ChangeNotifier();
+                    // });
                   },
                   icon: Icon(Icons.gps_fixed)),
+              Text('주소: ${context.read<GlobalData>().place}'),
             ],
           ),
           SizedBox(
