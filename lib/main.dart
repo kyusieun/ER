@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'second_page.dart';
 import 'package:provider/provider.dart';
+import 'dart:convert';
 
 class GlobalData extends ChangeNotifier {
   String userName = '';
@@ -82,6 +83,27 @@ class GlobalData extends ChangeNotifier {
     }
     print("$kind: $value");
     notifyListeners();
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'userName': userName,
+      'highPressure': highPressure,
+      'lowPressure': lowPressure,
+      'detailPulse': detailPulse,
+      'detailBreath': detailBreath,
+      'patientName': patientName,
+      'patientAge': patientAge,
+      'patientSex': patientSex,
+      'etc': etc,
+    };
+  }
+
+  void sendDataToServer() {
+    Map<String, dynamic> data = toJson();
+    String jsonData = jsonEncode(data);
+
+    // 여기서 jsonData를 서버에 전송하는 로직을 추가하세요
   }
 }
 
