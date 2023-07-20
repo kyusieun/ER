@@ -14,7 +14,7 @@ class GlobalData extends ChangeNotifier {
   String patientAge = '';
   String patientSex = '';
   String etc = '';
-  String place = '기본 주소';
+  String place = '서울시 동작구';
   String majorInjuryName = '';
   void updateString(String kind, String value) {
     switch (kind) {
@@ -245,7 +245,7 @@ class My119Buttons extends StatefulWidget {
     super.key,
   });
   @override
-  _My119ButtonsState createState() => _My119ButtonsState();
+  State<My119Buttons> createState() => _My119ButtonsState();
 }
 
 class _My119ButtonsState extends State<My119Buttons> {

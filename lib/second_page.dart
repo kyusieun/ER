@@ -3,7 +3,6 @@ import 'third_page.dart';
 import 'package:provider/provider.dart';
 import 'main.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:geocoding/geocoding.dart';
 import 'location_select.dart';
 
 class SecondPage extends StatelessWidget {
@@ -174,13 +173,28 @@ class SecondBody extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
+          Text(
+            '       주요 손상명',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+          ),
           Center(
-              child: Image.asset(
-            'assets/주요손상명.png',
-            width: 400,
-            height: 170,
-            fit: BoxFit.contain,
-          )),
+            child: SizedBox(
+                width: 300,
+                height: 40,
+                child: TextField(
+                  onChanged: (value) {
+                    context.read<GlobalData>().updateString('호흡', value);
+                  },
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                  ),
+                )),
+            //   Image.asset(
+            // 'assets/주요손상명.png',
+            // width: 400,
+            // height: 170,
+            // fit: BoxFit.contain,)
+          ),
         ],
       ),
     );

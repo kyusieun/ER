@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 
+// 보라매 중앙대 병원
 class LocationSelect extends StatefulWidget {
   const LocationSelect({Key? key}) : super(key: key);
 
   @override
-  _LocationSelectState createState() => _LocationSelectState();
+  State<LocationSelect> createState() => _LocationSelectState();
 }
 
 class _LocationSelectState extends State<LocationSelect> {
@@ -40,7 +41,7 @@ class _LocationSelectState extends State<LocationSelect> {
         ),
       ),
       bottomNavigationBar: ElevatedButton(
-        child: Text('test'),
+        child: Text('위치 좌표 저장하기'),
         onPressed: () {
           _getPosition().then((position) {
             print(
